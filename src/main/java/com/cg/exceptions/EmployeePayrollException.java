@@ -1,7 +1,8 @@
 package com.cg.exceptions;
 
 public class EmployeePayrollException extends Exception{
-
+    
+    private static final long serialVersionUID = -8450038806885975935L;
     public ExceptionTypes exceptionTypes;
 
     public EmployeePayrollException(ExceptionTypes exceptionTypes){

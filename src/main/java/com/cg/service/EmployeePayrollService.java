@@ -2,9 +2,7 @@ package com.cg.service;
 
 import com.cg.domain.EmployeePayroll;
 import com.cg.dto.EmployeePayrollDto;
-import com.cg.exceptions.DetailsNotProvidedExceptions;
 import com.cg.exceptions.EmployeePayrollException;
-import com.cg.exceptions.UserNotFound;
 import com.cg.repository.EmployeePayrollRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,9 +17,12 @@ public class EmployeePayrollService {
     @Autowired
     private EmployeePayrollRepository employeePayrollRepository;
 
-    public EmployeePayrollDto CreateUser(EmployeePayrollDto employeePayrollDto) throws EmployeePayrollException {
-        if (Objects.nonNull(employeePayrollDto.getName()) && Objects.nonNull(employeePayrollDto.getSalary())) {
-            EmployeePayroll employeePayroll = new EmployeePayroll(employeePayrollDto.getName(), employeePayrollDto.getSalary());
+    public EmployeePayrollDto CreateUser(EmployeePayrollDto employeePayrolldto) throws EmployeePayrollException {
+        if (Objects.nonNull(employeePayrolldto.getName()) && Objects.nonNull(employeePayrolldto.getSalary()) && Objects.nonNull(employeePayrolldto.getGender()) && Objects.nonNull(employeePayrolldto.getStartDate())
+            && Objects.nonNull(employeePayrolldto.getNote()) && Objects.nonNull(employeePayrolldto.getProfilePic()) &&
+                Objects.nonNull(employeePayrolldto.getDepartment())) {
+            EmployeePayroll employeePayroll = new EmployeePayroll(employeePayrolldto.getName(), employeePayrolldto.getSalary(),employeePayrolldto.getGender(),employeePayrolldto.getStartDate()
+              ,employeePayrolldto.getNote(),employeePayrolldto.getProfilePic(),employeePayrolldto.getDepartment());
             return new EmployeePayrollDto(employeePayrollRepository.save(employeePayroll));
         }
         throw new EmployeePayrollException(EmployeePayrollException.ExceptionTypes.EMPLOYEE_NOT_FOUND);
@@ -35,6 +36,21 @@ public class EmployeePayrollService {
             }
             if(Objects.nonNull(employeePayrollDto.getSalary())){
                 employeePayroll.setSalary(employeePayrollDto.getSalary());
+            }
+            if(Objects.nonNull(employeePayrollDto.getGender())){
+                employeePayroll.setGender(employeePayrollDto.getGender());
+            }
+            if(Objects.nonNull(employeePayrollDto.getStartDate())){
+                employeePayroll.setStartDate(employeePayrollDto.getStartDate());
+            }
+            if(Objects.nonNull(employeePayrollDto.getNote())){
+                employeePayroll.setNote(employeePayrollDto.getNote());
+            }
+            if(Objects.nonNull(employeePayrollDto.getProfilePic())){
+                employeePayroll.setProfilePic(employeePayrollDto.getProfilePic());
+            }
+            if(Objects.nonNull(employeePayrollDto.getDepartment())){
+                employeePayroll.setDepartment(employeePayrollDto.getDepartment());
             }
            return new EmployeePayrollDto(employeePayrollRepository.save(employeePayroll));
         }).orElseThrow(()-> new EmployeePayrollException( EmployeePayrollException.ExceptionTypes.EMPLOYEE_NOT_FOUND));

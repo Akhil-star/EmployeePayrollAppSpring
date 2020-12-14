@@ -1,10 +1,8 @@
 package com.cg.controller;
 
-import com.cg.domain.EmployeePayroll;
 import com.cg.dto.EmployeePayrollDto;
 import com.cg.dto.ResponseDto;
 import com.cg.exceptions.EmployeePayrollException;
-import com.cg.exceptions.UserNotFound;
 import com.cg.service.EmployeePayrollService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.naming.Binding;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -24,13 +21,13 @@ public class UserController {
     EmployeePayrollService employeePayrollService;
 
     @PostMapping("/create")
-    public ResponseEntity<ResponseDto> createUser(@RequestBody @Valid  EmployeePayrollDto user, BindingResult bindingResult){
+    public ResponseEntity<ResponseDto> createUser(@RequestBody @Valid EmployeePayrollDto user, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return new ResponseEntity<ResponseDto>(new ResponseDto((bindingResult.getAllErrors().get(0).getDefaultMessage()),"404"),HttpStatus.BAD_REQUEST);
         }
         try{
-            EmployeePayrollDto employeePayrollDto = employeePayrollService.CreateUser(user);
-            ResponseDto responseDto = new ResponseDto("User created succesfully",employeePayrollDto);
+            EmployeePayrollDto employeePayrolldto = employeePayrollService.CreateUser(user);
+            ResponseDto responseDto = new ResponseDto("User created succesfully",employeePayrolldto);
             return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
         } catch ( EmployeePayrollException e){
             ResponseDto responseDto = new ResponseDto("User not created succesfully","404");
@@ -55,13 +52,10 @@ public class UserController {
 
     //http://localhost:8080/employee-payroll/delete/1
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<ResponseDto> deleteUser(@PathVariable("id") @Valid Long id,BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            return new ResponseEntity<ResponseDto>(new ResponseDto((bindingResult.getAllErrors().get(0).getDefaultMessage()),"404"),HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<ResponseDto> deleteUser(@PathVariable("id") @Valid Long id){
         try{
             EmployeePayrollDto employeePayrollDto = employeePayrollService.deleteUser(id);
-            ResponseDto responseDto = new ResponseDto("User deleted succesfully",employeePayrollDto);
+            ResponseDto responseDto = new ResponseDto("User deleted succesfully","200");
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(responseDto);
         } catch ( EmployeePayrollException e){
             ResponseDto responseDto = new ResponseDto("Delete Call UnSuccesfull","404");
