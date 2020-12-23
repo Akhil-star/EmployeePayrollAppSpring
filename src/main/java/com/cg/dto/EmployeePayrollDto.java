@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.validation.constraints.*;
-import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -15,10 +14,10 @@ public class EmployeePayrollDto {
     private Long id;
     @NotNull(message = "Please enter valid name")
     @NotEmpty(message = "Please enter valid name")
-    @Pattern(regexp = "^[A-Z][a-z]{3,}",message="Enter the valid name")
+    @Pattern(regexp = "^[A-Z][a-zA-Z\\s]{3,}",message="Enter the valid name")
     private String name;
 
-    @Min(value = 500,message="Min wage is more than 500")
+    //@NotNull(message = "Please enter salary more than 500")
     private String salary;
 
     @Pattern(regexp = "male|female", message ="Gender needs to be male or female")
@@ -26,8 +25,8 @@ public class EmployeePayrollDto {
 
     @JsonFormat(pattern = "dd MMM yyyy")
     @NotNull(message = "Start date should not be empty")
-    @PastOrPresent(message = "startDate should be past or todays date")
-    private LocalDate startDate;
+//   @PastOrPresent(message = "startDate should be past or todays date")
+    private String startDate;
 
     @NotBlank(message = "Note cannot be empty")
     private String note;
@@ -35,7 +34,7 @@ public class EmployeePayrollDto {
     @NotBlank(message = "profilePic cannot be empty")
     private String profilePic;
 
-    @NotNull(message = "Department should not be empty")
+    //@NotNull(message = "Department should not be empty")
     private List<String> department;
 
 

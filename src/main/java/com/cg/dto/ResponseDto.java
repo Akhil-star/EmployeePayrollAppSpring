@@ -19,4 +19,9 @@ public class ResponseDto {
         this.statusCode = statusCode;
     }
 
+    public ResponseDto(String message, String statusCode, Object data) {
+        this.message = message;
+        this.statusCode = statusCode;
+        this.data = data;
+    }
 }

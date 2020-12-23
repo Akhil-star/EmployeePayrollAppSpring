@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -20,20 +19,21 @@ public class EmployeePayroll implements Serializable {
     private String name;
     private String salary;
     private String gender;
-    private LocalDate startDate;
+    private String startDate;
     private String note;
     private String profilePic;
 
-    @ElementCollection
-    @CollectionTable(name = "employee_department", joinColumns = @JoinColumn(name = "id"))
-    @Column(name = "department")
-    private List<String> department;
+   @ElementCollection
+   private List<String> department;
+
+    //    @CollectionTable(name = "employee_department", joinColumns = @JoinColumn(name = "id"))
+//    @Column(name = "department")
 
     public EmployeePayroll() {
 
     }
 
-    public EmployeePayroll(String name,String salary, String gender, LocalDate startDate,  String note, String profilePic,  List<String> department) {
+    public EmployeePayroll(String name,String salary, String gender, String startDate,  String note, String profilePic,  List<String> department) {
         this.name = name;
         this.salary = salary;
         this.gender = gender;

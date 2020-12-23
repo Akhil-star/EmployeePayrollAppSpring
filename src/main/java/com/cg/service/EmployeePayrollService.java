@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +31,7 @@ public class EmployeePayrollService {
 
     public EmployeePayrollDto UpdateUser(EmployeePayrollDto employeePayrollDto) throws EmployeePayrollException {
 
+        System.out.println(employeePayrollDto.toString());
         return employeePayrollRepository.findById(employeePayrollDto.getId()).map(employeePayroll -> {
             if(Objects.nonNull(employeePayrollDto.getName())){
                 employeePayroll.setName(employeePayrollDto.getName());
@@ -68,5 +70,11 @@ public class EmployeePayrollService {
                 .stream()
                 .map(employeePayroll -> new EmployeePayrollDto(employeePayroll))
                 .collect(Collectors.toList());
+    }
+
+    public Optional<EmployeePayroll> getById(long id) {
+        System.out.println("in get");
+        System.out.println(employeePayrollRepository.findById(id));
+        return employeePayrollRepository.findById(id);
     }
 }
